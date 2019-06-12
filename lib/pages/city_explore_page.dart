@@ -153,7 +153,7 @@ class _CityExplorePageState extends State<CityExplorePage> {
             child: Container(
               margin: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
               height:
-                  Curves.easeIn.transform(value) *
+                  Curves.easeIn.transform(index == 0 ? value : value * 0.5) *
                       450,
               child: child,
             ),
@@ -183,7 +183,6 @@ class _CityExplorePageState extends State<CityExplorePage> {
 
   _onPageChanged(int index) {
     setState(() {
-      print(index);
       currentPage = index;
     });
   }
