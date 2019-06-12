@@ -54,22 +54,40 @@ class _CityExplorePageState extends State<CityExplorePage> {
   }
 
   Widget itemBuilder(index) {
-    return Material(
-      elevation: 5.0,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8.0),
-              bottomRight: Radius.circular(8.0))),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 5.0),
-        child: ClipRRect(
+    return AnimatedBuilder(
+      animation: _pageController,
+      builder: (context, child) {
+        double value = 1;
+        if (_pageController.position.haveDimensions) {
+          value = _pageController.page - index;
+          value = (1 - (value.abs() * 0.5)).clamp(0.0, 1.0);
+        } else {}
+        return Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            margin: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
+            height: Curves.easeIn.transform(value) * 300,
+            child: child,
+          ),
+        );
+      },
+      child: Material(
+        elevation: 5.0,
+        shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(9.0),
-                bottomRight: Radius.circular(9.0)),
-            child: Image.asset(
-              imagesList[index],
-              fit: BoxFit.fitHeight,
-            )),
+                bottomLeft: Radius.circular(8.0),
+                bottomRight: Radius.circular(8.0))),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 5.0),
+          child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(9.0),
+                  bottomRight: Radius.circular(9.0)),
+              child: Image.asset(
+                imagesList[index],
+                fit: BoxFit.fitHeight,
+              )),
+        ),
       ),
     );
   }
